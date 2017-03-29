@@ -9,7 +9,7 @@ import { Col, PageHeader} from 'react-bootstrap';
 
 const Home = (props) => (
   <Col id="home">
-    <PageHeader id="home-header">Oranges to Oranges</PageHeader>
+    <PageHeader id="home-header">Oranges to Apples</PageHeader>
     <Col>
       <GameDescription />
     </Col>
