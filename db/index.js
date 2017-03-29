@@ -8,7 +8,7 @@ var dummyGamePlayThrough = require('./game-playthrough-dummy-data.js')
 
 var db = mongoose.connection;
 
-console.log(mongobURL);
+console.log(mongodbURL);
 db.on('error', function() {
   console.log('mongoose connection error');
 });
