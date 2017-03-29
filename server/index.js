@@ -32,9 +32,6 @@ passport.deserializeUser(User.deserializeUser());
 
 
 // mongoose.connect('mongodb://localhost/passport_local_mongoose_express4');
-app.get('/testroute1', function(req, res) {
-  res.status(200).send('you reached testroute1');
-})
 
 app.get('/testroute2', function(req, res) {
   res.status(200).send('you reached testroute2');
