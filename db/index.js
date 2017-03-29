@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-if (process.env.PORT)
+if (process.env.PORT) {
   mongodbURL = 'mongodb://twalk4821:!Qa2ws3ed@ds145380.mlab.com:45380/oranges';
 } else {
   mongodbURL = 'mongodb://localhost/orange-to-orange';
