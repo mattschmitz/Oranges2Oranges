@@ -1,5 +1,11 @@
 var mongoose = require('mongoose');
-var mongodbURL = process.env.MONGODB_URI || 'mongodb://localhost/orange-to-orange';
+
+if (process.env.PORT)
+  mongodbURL = 'mongodb://twalk4821:!Qa2ws3ed@ds145380.mlab.com:45380/oranges';
+} else {
+  mongodbURL = 'mongodb://localhost/orange-to-orange';
+}
+
 mongoose.connect(mongodbURL);
 var Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
