@@ -1,16 +1,17 @@
 var mongoose = require('mongoose');
+var passportLocalMongoose = require('passport-local-mongoose');
+var dummyGames = require('./dummy-data');
+var dummyGamePlayThrough = require('./game-playthrough-dummy-data.js')
+
+var Schema = mongoose.Schema;
+mongoose.Promise = global.Promise;
 
 if (process.env.PORT) {
   mongodbURL = 'mongodb://twalk4821:!Qa2ws3ed@ds145380.mlab.com:45380/oranges';
 } else {
   mongodbURL = 'mongodb://localhost/orange-to-orange';
 }
-
 mongoose.connect(mongodbURL);
-var Schema = mongoose.Schema;
-var passportLocalMongoose = require('passport-local-mongoose');
-var dummyGames = require('./dummy-data');
-var dummyGamePlayThrough = require('./game-playthrough-dummy-data.js')
 
 var db = mongoose.connection;
 
@@ -19,10 +20,8 @@ db.on('error', function() {
 });
 
 db.once('open', function() {
-  console.log('mongoose connected successfully');
-  console.log(typeof dummyGamePlayThrough);
+  console.log('Mongoose connected successfully');
 });
-
 
 var gameInstanceSchema = new Schema({
   id: Number,

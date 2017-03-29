@@ -30,12 +30,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
 // mongoose.connect('mongodb://localhost/passport_local_mongoose_express4');
-
-app.get('/testroute2', function(req, res) {
-  res.status(200).send('you reached testroute2');
-})
 
 app.post('/signup', function (req, res) {
   User.register(new User({username: req.body.username, email: req.body.email}), req.body.password, function (err, user) {
@@ -107,7 +102,7 @@ app.get('/username', function(req, res) {
 
 
 var server = app.listen(port, function() {
-  console.log('App is listening on port: ', port);
+  console.log('Server listening on port: ', port);
 });
 
 //SOCKETS 
