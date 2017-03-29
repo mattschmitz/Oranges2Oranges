@@ -1,4 +1,4 @@
-# Oranges to Apples
+# Oranges two Apples
 
 > A four-round multiplayer game where players attempt to come up with the funniest responses to thought-provoking questions.
 
