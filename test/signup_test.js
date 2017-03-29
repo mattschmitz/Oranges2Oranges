@@ -30,7 +30,7 @@ after(function(done) {
 })
 
 describe('user sign up', function() {
-	it('should allow new users to sign up', function (done) {
+  it('should allow new users to sign up', function (done) {
 		server
 		.post('/signup')
 		.send(userOne)
@@ -39,10 +39,19 @@ describe('user sign up', function() {
 			if(err) return done(err);
 			done();
 		});
-	})
+  })
 
-	it('should not allow a username to be signed up twice', function (done) {
-		server
+  it('should add a user to database', function (done) {
+		userModel.findOne({username: userOne.username})
+		.exec(function (err, found) {
+			expect(found.username).to.equal(userOne.username);
+			expect(found.email).to.equal(userOne.email);
+			done()
+		})
+  })
+
+  it('should not allow a username to be signed up twice', function (done) {
+    server
 		.post('/signup')
 		.send(userOne)
 		.expect(400)
@@ -50,7 +59,7 @@ describe('user sign up', function() {
 			if(err) return done(err);
 			done();
 		})
-	})
+  })
 })
 
 
