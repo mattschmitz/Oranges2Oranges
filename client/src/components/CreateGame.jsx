@@ -41,7 +41,7 @@ class CreateGame extends React.Component {
     }
 
     $.ajax({
-      url: hostUrl + 'games',
+      url: '/games',
       method: 'POST',
       headers: {'content-type': 'application/json'},
       data: JSON.stringify(gameInstance),
