@@ -7,7 +7,7 @@ var expect = chai.expect;
 var dbIndex = require('../db/index.js');
 
 var db = dbIndex.db
-var userModel = dbIndex.userModel
+var User = dbIndex.userModel
 
 var userOne = {
 	username: 'justinisgreat', 
@@ -22,7 +22,7 @@ var userTwo = {
 }
 
 after(function(done) {
-	userModel.remove({username: userOne.username}).exec()
+	User.remove({username: userOne.username}).exec()
 	done();
 })
 
@@ -39,7 +39,7 @@ describe('user sign up', function() {
   })
 
   it('should add a user to database', function (done) {
-		userModel.findOne({username: userOne.username})
+		User.findOne({username: userOne.username})
 		.exec(function (err, found) {
 			expect(found.username).to.equal(userOne.username);
 			expect(found.email).to.equal(userOne.email);
