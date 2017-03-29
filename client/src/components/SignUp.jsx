@@ -38,7 +38,6 @@ class SignUp extends React.Component {
   }
 
   handleSignUpAttempt(email, username, password) {
-    console.log(process.env.LIVE_URL);
     $.ajax({
       url: '/signup',
       method: 'POST',
