@@ -8,6 +8,9 @@
     },
     "LIVE_URL": {
       "required": true
+    },
+    "MONGODB_URI": {
+      "required": true
     }
 
   },
