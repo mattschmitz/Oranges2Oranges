@@ -9,4 +9,20 @@ var dbIndex = ('../db/index.js')
 var db = dbIndex.db
 var Game = dbIndex.gameInstanceModel
 
-,
+var testGame = {
+	
+}
+
+describe('Games', function () {
+	it('should return all games', function(done) {
+		server
+		.get('/games')
+		.expect(function(res) {
+			console.log(res.body, 'games test res.body');
+		})
+		.end(function(err, res) {
+			if(err) return done(err);
+			done();
+		})
+	})
+})

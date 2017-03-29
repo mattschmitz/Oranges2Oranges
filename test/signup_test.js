@@ -26,7 +26,7 @@ after(function(done) {
 	done();
 })
 
-describe('user sign up', function() {
+describe('User Sign Up', function() {
   it('should allow new users to sign up', function (done) {
 		server
 		.post('/signup')
