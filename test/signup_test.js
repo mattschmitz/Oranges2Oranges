@@ -4,8 +4,8 @@ var express = require('express');
 var server = request('http://localhost:3000');
 // var server = request('https://OURAPPNAME.herokuapp.com');
 var expect = chai.expect;
-var dbIndex = require('../db/index.js');
 
+var dbIndex = require('../db/index.js');
 var db = dbIndex.db
 var User = dbIndex.userModel
 
@@ -20,6 +20,12 @@ var userTwo = {
   email: 'userLobby@gmail.com', 
   password: 'userLobby'
 }
+
+after(function(done) {
+  User.remove({username: userOne.username}).exec()
+  User.remove({username: userTwo.username}).exec()
+  done();
+})
 
 describe('User Sign Up', function() {
 

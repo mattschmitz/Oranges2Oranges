@@ -89,7 +89,7 @@ class Game extends React.Component {
         this.setState({game: data[0]})
       },
       error: (err) => {
-          console.log('error getting games: ', err);
+        console.log('error getting games: ', err);
       }
     });
   }
