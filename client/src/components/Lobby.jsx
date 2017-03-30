@@ -45,7 +45,7 @@ class Lobby extends React.Component {
 
   getUsername() {
     $.ajax({
-      url: hostUrl + 'username',
+      url: '/username',
       method: 'GET',
       headers: {'content-type': 'application/json'},
       success: (username) => {
