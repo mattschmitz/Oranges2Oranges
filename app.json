@@ -3,15 +3,6 @@
   "scripts": {
   },
   "env": {
-    "HEROKU_APP_NAME": {
-        "required": true
-    },
-    "LIVE_URL": {
-      "required": true
-    },
-    "MONGODB_URI": {
-      "required": true
-    }
 
   },
   "formation": {
