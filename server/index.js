@@ -126,8 +126,6 @@ io.on('connection', (socket) => {
     queries.retrieveGameInstance(gameName)
     .then(function (game){  
     // add client to game DB if they're not already in players list
-    //!game.players.includes(username)
-    console.log('in server, join game, game:', game);
       if (game.players.indexOf(username) === -1) {
         var players = game.players.slice(0);
         players.push(username);
@@ -149,7 +147,6 @@ io.on('connection', (socket) => {
           })
         });
       } else {
-        console.log('in server, did not start game, game:', game);
         io.to(gameName).emit('update waiting room', game);
       }
     }).catch(function(error) {
