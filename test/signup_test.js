@@ -21,12 +21,13 @@ var userTwo = {
   password: 'userLobby'
 }
 
-after(function(done) {
-  User.remove({username: userOne.username}).exec()
-  done();
-})
-
 describe('User Sign Up', function() {
+
+  after(function(done) {
+    User.remove({username: userOne.username}).exec()
+    done();
+  })
+
   it('should allow new users to sign up', function (done) {
     server
     .post('/signup')
