@@ -126,8 +126,9 @@ io.on('connection', (socket) => {
     queries.retrieveGameInstance(gameName)
     .then(function (game){  
     // add client to game DB if they're not already in players list
+    //!game.players.includes(username)
     console.log('in server, join game, game:', game);
-      if (!game.players.includes(username)) {
+      if (!(Array.prototype.includes(game, username))) {
         var players = game.players.slice(0);
         players.push(username);
         return queries.addPlayerToGameInstance(gameName, players);
