@@ -14,9 +14,6 @@ var dummyGamePlayThrough = require('./game-playthrough-dummy-data.js')
 
 var db = mongoose.connection;
 
-console.log('here we are in index.js, mongodbURL= ', mongodbURL);
-console.log('process.env =',  process.env);
-process.stdout.write('the mongodbURL =' + mongodbURL);
 db.on('error', function() {
   console.log('mongoose connection error');
 });
