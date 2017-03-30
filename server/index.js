@@ -58,8 +58,6 @@ app.get('/games', function(req, res) {
   promise.then(function(games) {
     var sortedGames = [];
     var gameNameFirstWords = games.map(function(game){
-      // console.log(game, 'game')
-      // console.log(game.gameName, 'game.gameName')
       return game.gameName.split(/\W+/, 1)[0].toLowerCase();
     })
     var sortedGameNameFirstWords = gameNameFirstWords.slice().sort();
