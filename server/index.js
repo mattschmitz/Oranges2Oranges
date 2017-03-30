@@ -148,6 +148,7 @@ io.on('connection', (socket) => {
           })
         });
       } else {
+        console.log('in server, did not start game, game:', game);
         io.to(gameName).emit('update waiting room', game);
       }
     }).catch(function(error) {

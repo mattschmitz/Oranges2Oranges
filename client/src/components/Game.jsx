@@ -27,6 +27,7 @@ class Game extends React.Component {
     this.handleReadyToMoveOn = this.handleReadyToMoveOn.bind(this);
 
     socket.on('update waiting room', (gameObj) => {
+      console.log('in game, updating waiting room, game:', gameObj);
       this.setState({game: gameObj});
     })
     socket.on('start game', (gameObj) => {
