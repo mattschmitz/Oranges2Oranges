@@ -14,7 +14,7 @@ const Home = (props) => {
   } else {
     stl = props.sendToLobby;
   }
-
+  
   return (
     <Col id="home">
       <PageHeader id="home-header">Oranges to Oranges</PageHeader>

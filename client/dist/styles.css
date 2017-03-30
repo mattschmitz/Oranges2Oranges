@@ -13,7 +13,7 @@ body {
   align-items: center;
 }
 
-#prompt {
+#prompt, #meme-prompt{
   font-size: 18px;
 }
 

@@ -23,7 +23,14 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(function(req,res,done) {
+  console.log('req.url:' + req.url + '\n');
+  done();
+})
+
 app.use(express.static(__dirname + '/../client/dist'));
+app.use(express.static(__dirname + '/assets/memes'))
 
 // passport config
 passport.use(new LocalStrategy(User.authenticate()));
@@ -99,7 +106,6 @@ app.get('/username', function(req, res) {
   var user = req.session.passport.user;
   res.status(200).send(user);
 });
-
 
 var server = app.listen(port, function() {
   console.log('Server listening on port: ', port);
