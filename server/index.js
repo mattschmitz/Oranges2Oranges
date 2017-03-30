@@ -124,9 +124,9 @@ io.on('connection', (socket) => {
     Sockets[socket] = gameName;
     Rooms[gameName] ? Rooms[gameName]++ : Rooms[gameName] = 1;
     queries.retrieveGameInstance(gameName)
-    .then(function (game){
+    .then(function (game){  
     // add client to game DB if they're not already in players list
-      if (!game.players.includes(username)) {
+      if (game.players.indexOf(username) === -1) {
         var players = game.players.slice(0);
         players.push(username);
         return queries.addPlayerToGameInstance(gameName, players);
