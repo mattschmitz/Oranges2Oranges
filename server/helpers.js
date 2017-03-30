@@ -1,4 +1,4 @@
-var allPrompts = [
+var random = [
   'The best thing to say to get out of jury duty is: ',
   'What is the best type of bear and why?',
   'If you had to name your child after a type of food, what would it be?',
@@ -9,6 +9,19 @@ var allPrompts = [
   'A new Muppets movie: The Muppets Take _____',
   'What does Tri Tip even mean?'
 ]
+
+var memes = [
+  'memeOne',
+  'memeTwo',
+  'memeThree',
+  'memeFour',
+  'memeFive'
+]
+
+var allPrompts = {
+  random: random, 
+  memes: memes
+}
 
 var userAlreadySubmitted = function(username, responseArray) {
   var submitted = false;
@@ -24,7 +37,8 @@ var userAlreadySubmitted = function(username, responseArray) {
 
 var addPrompts = function(gameInstance) {
   var Rounds = gameInstance.rounds.slice(0);
-  var prompts = allPrompts.slice(0);
+  var category = gameInstance.category
+  var prompts = allPrompts[category].slice(0);
   var chosenPrompts = [];
 
   while (chosenPrompts.length < 4) {
