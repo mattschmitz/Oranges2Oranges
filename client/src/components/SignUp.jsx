@@ -39,7 +39,7 @@ class SignUp extends React.Component {
 
   handleSignUpAttempt(email, username, password) {
     $.ajax({
-      url: hostUrl + 'signup',
+      url: '/signup',
       method: 'POST',
       headers: {'content-type': 'application/json'},
       data: JSON.stringify({'username': username, 'email': email, 'password': password}),

@@ -81,7 +81,7 @@ class Game extends React.Component {
   getGameData(gameName) {
     // use gameName to retrieve gameInstance obj of that game
     $.ajax({
-      url: hostUrl + 'game',
+      url: '/game',
       method: 'GET',
       headers: {'content-type': 'application/json'},
       data: {name: gameName},
@@ -96,7 +96,7 @@ class Game extends React.Component {
 
   getUsername() {
     $.ajax({
-      url: hostUrl + 'username',
+      url: '/username',
       method: 'GET',
       headers: {'content-type': 'application/json'},
       success: (username) => {

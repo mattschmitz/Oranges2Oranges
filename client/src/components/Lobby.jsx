@@ -28,7 +28,7 @@ class Lobby extends React.Component {
 
   getGames() {
     $.ajax({
-      url: hostUrl + 'games',
+      url: '/games',
       method: 'GET',
       headers: {'content-type': 'application/json'},
       success: (data) => {
