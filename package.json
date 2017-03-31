@@ -60,7 +60,7 @@
     "webpack": "^2.2.1"
   },
   "jest": {
-    "testRegex": "(/test/.*|(\\.|/)(jest))\\.jsx?$",
+    "testRegex": "(/__test__/.*|(\\.|/)(jest))\\.jsx?$",
     "verbose": true
   }
 }
