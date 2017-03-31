@@ -6,9 +6,9 @@ import { ListGroup } from 'react-bootstrap';
 
 const YourGames = (props) => {
   let yourGames = [];
-    props.games.map((game) => {if( (game.gameStage === 'waiting' || game.gameStage === 'playing') && game.players.includes(props.username)){ yourGames.push(game)}});
-    // console.log(yourGames);
-
+  
+  props.games.map((game) => {if( (game.gameStage === 'waiting' || game.gameStage === 'playing') && (game.players.indexOf(props.username) > -1)){ yourGames.push(game)}});
+  // console.log('yourGames:', yourGames);
 
   let header = '';
 
