@@ -10,10 +10,39 @@ var db = dbIndex.db
 var Game = dbIndex.gameInstanceModel
 var User = dbIndex.userModel
 
-var testGame = { 
-  gameName: 'test',
+var randomGame = { 
+  gameName: 'randomTest',
   password: '',
   players: [],
+  category: 'random',
+  rounds: 
+   [ { prompt: 'prompt 1',
+       responses: [],
+       winner: '',
+       stage: 0,
+       ready: [] },
+     { prompt: 'prompt 2',
+       responses: [],
+       winner: '',
+       stage: 0,
+       ready: [] },
+     { prompt: 'prompt 3',
+       responses: [],
+       winner: '',
+       stage: 0,
+       ready: [] },
+     { prompt: 'prompt 4',
+       responses: [],
+       winner: '',
+       stage: 0,
+       ready: [] } ],
+  currentRound: 0 
+}
+var memeGame = { 
+  gameName: 'memeTest',
+  password: '',
+  players: [],
+  category: 'memes',
   rounds: 
    [ { prompt: 'prompt 1',
        responses: [],
@@ -58,19 +87,10 @@ describe('Games', function () {
   })
 
   after(function(done) {
-    Game.remove({gameName: testGame.gameName}).exec();
+    Game.remove({gameName: randomGame.gameName}).exec();
+    Game.remove({gameName: memeGame.gameName}).exec();
     User.remove({username: userOne.username}).exec()
     done();
-  })
-
-  it('should return a 201 status code after creating a game', function(done) {
-    server
-    .post('/games')
-    .send(testGame)
-    .expect(201)
-    .end(function(err, res) {
-      done();
-    })
   })
 
   it('should return all games', function(done) {
@@ -87,16 +107,56 @@ describe('Games', function () {
     })
   })
 
-  it('should send back game data when server is sent a game name', function (done) {
+  it('should return a 201 status code after creating a meme game', function(done) {
+    server
+    .post('/games')
+    .send(memeGame)
+    .expect(201)
+    .end(function(err, res) {
+      if(err) return done(err);
+      done();
+    })
+  })
+
+  it('should return a memes game that has been created', function(done) {
+    server
+    .get('/game?name=' + memeGame.gameName)
+    .expect(function(res) {
+      expect(res.status).to.equal(200);
+      expect(res.body.length).to.equal(1);
+      expect(res.body[0].category).to.equal(memeGame.category)
+      expect(res.body[0].gameName).to.equal(memeGame.gameName);
+      expect(res.body[0].password).to.equal(memeGame.password);
+      expect(res.body[0].currentRound).to.equal(memeGame.currentRound);
+    })
+    .end(function (err, res) {
+      if(err) return done(err);
+      done();
+    })
+
+  })
+
+  it('should return a 201 status code after creating a random game', function(done) {
+    server
+    .post('/games')
+    .send(randomGame)
+    .expect(201)
+    .end(function(err, res) {
+      done();
+    })
+  })
+
+  it('should return a random game that has been created', function (done) {
 
     server
-    .get('/game?name=' +  testGame.gameName)
+    .get('/game?name=' +  randomGame.gameName)
     .expect(function(res) {
-      expect(res.status).to.equal(200)
-      expect(res.body.length).to.equal(1)
-      expect(res.body[0].gameName).to.equal(testGame.gameName)
-      expect(res.body[0].password).to.equal(testGame.password)
-      expect(res.body[0].currentRound).to.equal(testGame.currentRound)
+      expect(res.status).to.equal(200);
+      expect(res.body.length).to.equal(1);
+      expect(res.body[0].category).to.equal(randomGame.category)
+      expect(res.body[0].gameName).to.equal(randomGame.gameName);
+      expect(res.body[0].password).to.equal(randomGame.password);
+      expect(res.body[0].currentRound).to.equal(randomGame.currentRound);
     })
     .end(function (err, res) {
       if(err) return done(err);

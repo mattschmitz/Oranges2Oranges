@@ -73,7 +73,9 @@ app.get('/games', function(req, res) {
 app.post('/games', function(req, res) {
   var gameInstance = req.body;
 
-  helpers.addPrompts(gameInstance);
+  if (gameInstance.category !== 'user-generated') {
+    helpers.addPrompts(gameInstance);
+  }
 
   Game.create(gameInstance, function(err) {
     if (err) {

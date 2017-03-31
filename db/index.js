@@ -30,6 +30,7 @@ var gameInstanceSchema = new Schema({
   players: Array, 
   rounds: Array, 
   currentRound: Number,
+  category: String,
   gameStage: {type: String, default: 'waiting'}
 });
 

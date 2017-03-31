@@ -26,12 +26,15 @@ class CreateGame extends React.Component {
   }
 
   addGameToDB(gameName, promptType, callback) {
-    var initialStage = promptType === 'random' ? 0 : -1;
+
+    ////change to be strings
+    var initialStage = (promptType === 'random' || promptType === 'memes') ? 0 : -1;
 
     var gameInstance = {
       gameName: gameName,
       password: '',
       players: [],
+      category: promptType,
       rounds: [
       {prompt: 'prompt 1', responses: [], winner: '', stage: initialStage, ready: []}, 
       {prompt: 'prompt 2', responses: [], winner: '', stage: initialStage, ready: []}, 
@@ -73,6 +76,7 @@ class CreateGame extends React.Component {
           <DropdownButton bsSize="small" title='Prompt-Type' id='0'>
             <MenuItem eventKey="1" onSelect={() => this.handlePromptTypeSelection('random')}>Random</MenuItem>
             <MenuItem eventKey="2" onSelect={() => this.handlePromptTypeSelection('user-generated')}>User-generated</MenuItem>
+            <MenuItem eventKey="3" onSelect={() => this.handlePromptTypeSelection('memes')}>Memes</MenuItem>
           </DropdownButton>
           <Button bsSize="small" onClick={() => this.addGameToDB(this.state.gameName, this.state.promptType, this.props.sendToGame)}>Submit</Button>
       </div>
