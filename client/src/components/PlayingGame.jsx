@@ -35,14 +35,18 @@ class PlayingGame extends React.Component{
 
     if (nextProps) {
       let curRound = nextProps.game.currentRound;
+      let numPlayers = nextProps.game.players.length;
+      let index = curRound % numPlayers;
       
-      if (nextProps.game.players[curRound] === nextProps.user) {
+      if (nextProps.game.players[index] === nextProps.user) {
         this.setState({role: 'judge'})
       } else {
         this.setState({role: 'player'})
       }
     } else {
       let curRound = this.props.game.currentRound;
+      let numPlayers = this.props.game.players.length;
+      let index = curRound % numPlayers;
       
       if (this.props.game.players[curRound] === this.props.user) {
         this.setState({role: 'judge'})
@@ -55,7 +59,9 @@ class PlayingGame extends React.Component{
   render() {
     var curRound = this.props.game.currentRound;
     var curPrompt = this.props.game.rounds[curRound].prompt;
-    var curJudge = this.props.game.players[curRound];
+    var numPlayers = this.props.game.players.length;
+    var index = curRound % numPlayers;
+    var curJudge = this.props.game.players[index];
     var stage = this.props.game.rounds[curRound].stage;
     var responses = this.props.game.rounds[curRound].responses;
     var winner = this.props.game.rounds[curRound].winner;

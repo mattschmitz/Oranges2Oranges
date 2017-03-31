@@ -25,6 +25,7 @@ class Game extends React.Component {
     this.handlePromptSubmission = this.handlePromptSubmission.bind(this);
     this.handleJudgeSelection = this.handleJudgeSelection.bind(this);
     this.handleReadyToMoveOn = this.handleReadyToMoveOn.bind(this);
+    this.startGame = this.startGame.bind(this);
 
     socket.on('update waiting room', (gameObj) => {
       this.setState({game: gameObj});
@@ -58,10 +59,6 @@ class Game extends React.Component {
     if (this.props.params) {
       this.getGameData(this.props.params.gamename);
       this.getUsername();
-    }
-
-    if (this.state.game && this.state.game.gameStage === 'w') {
-      this.setState({game: {gameStage: 'waiting'}});
     }
   }
 
@@ -116,8 +113,12 @@ class Game extends React.Component {
     });
   }
 
+  startGame() {
+    socket.emit('host start', {gameName: this.props.params.gamename, username: this.state.username});
+  }
+
   handleResponse(response) {
-    socket.emit('submit response', {gameName: this.props.params.gamename, username: this.state.username, response: response});
+    socket.emit('submit response', {gameName: this.props.params.gamename, numPlayers: this.state.game.players.length, username: this.state.username, response: response});
   }
 
   handleJudgeSelection(winner) {
@@ -125,7 +126,7 @@ class Game extends React.Component {
   }
 
   handleReadyToMoveOn() {
-    socket.emit('ready to move on', {gameName: this.props.params.gamename, username: this.state.username});
+    socket.emit('ready to move on', {gameName: this.props.params.gamename, numPlayers: this.state.game.players.length, username: this.state.username});
   }
 
   handlePromptSubmission(prompt) {
@@ -142,7 +143,7 @@ class Game extends React.Component {
 
     return (
       <div id="game">
-        {this.state.game && this.state.username && this.state.game.gameStage === 'waiting' && <WaitingRoom game={this.state.game} user={this.state.username}/>}
+        {this.state.game && this.state.username && this.state.game.gameStage === 'waiting' && <WaitingRoom game={this.state.game} user={this.state.username} startgame={this.startGame} />}
         {this.state.game && this.state.username && this.state.game.gameStage === 'playing' && <PlayingGame game={this.state.game} user={this.state.username} handleResponse={this.handleResponse} handlePromptSubmission={this.handlePromptSubmission} handleJudgeSelection={this.handleJudgeSelection} handleReadyToMoveOn={this.handleReadyToMoveOn}/>}
         {this.state.game && this.state.username && this.state.game.gameStage === 'gameover' && <EndOfGame game={this.state.game} sendToLobby={stl}/>}
       </div>

@@ -129,31 +129,37 @@ io.on('connection', (socket) => {
       if (game.players.indexOf(username) === -1) {
         var players = game.players.slice(0);
         players.push(username);
+        if (players.length === 1) {
+          return queries.addPlayerToGameInstance(gameName, players, username);  
+        }
         return queries.addPlayerToGameInstance(gameName, players);
       }
     }).then(function () {
       return queries.retrieveGameInstance(gameName);
     }).then(function (game) {
-    // then, check num of players in players list
-      // if it's 4 and gameStage is waiting 
-      if (game.players.length === 4 && game.gameStage === 'waiting') {
-        // update gameStage in db from waiting to playing
-        return queries.setGameInstanceGameStageToPlaying(gameName)
-        .then(function () {
-          return queries.retrieveGameInstance(gameName)
-          .then(function (game) {
-          // emit 'start game' event and send the game instance obj
-            io.to(gameName).emit('start game', game);
-          })
-        });
-      } else {
-        io.to(gameName).emit('update waiting room', game);
-      }
+      io.to(gameName).emit('update waiting room', game);
     }).catch(function(error) {
       console.log(error)
       throw error;
     })
   })
+
+  socket.on('host start', function(data) {
+    console.log('Host has started game');
+    socket.join(data.gameName);
+    var username = data.username;
+    var gameName = data.gameName;
+    // the host has started the game
+    // update gameStage in db from waiting to playing
+   queries.setGameInstanceGameStageToPlaying(gameName)
+    .then(function () {
+      return queries.retrieveGameInstance(gameName)
+      .then(function (game) {
+      // emit 'start game' event and send the game instance obj
+        io.to(gameName).emit('start game', game);
+      })
+    });
+  });
 
   socket.on('prompt created', (data) => {
     var gameName = data.gameName;
@@ -182,6 +188,7 @@ io.on('connection', (socket) => {
     var gameName = data.gameName;
     var username = data.username;
     var response = data.response;
+    var numPlayers = data.numPlayers - 1;
 
     queries.retrieveGameInstance(gameName)
     .then(function(game) {
@@ -192,7 +199,7 @@ io.on('connection', (socket) => {
       if (!helpers.userAlreadySubmitted(username, currentResponses)) {
         currentRounds[currentRound].responses.push([response, username]);
 
-        if (currentRounds[currentRound].responses.length === 3) {
+        if (currentRounds[currentRound].responses.length === numPlayers) {
           currentRounds[currentRound].stage++;
         }
         //update rounds property of the game in DB w/ new responses and stage
@@ -202,7 +209,7 @@ io.on('connection', (socket) => {
           // if there are 3 responses go to current Round in round array and increment stage by 1
           // retrieve updated game from DB
           // emit 'start judging' with game instance obj as data
-          if (currentRounds[currentRound].responses.length === 3) {
+          if (currentRounds[currentRound].responses.length === numPlayers) {
             return queries.retrieveGameInstance(gameName)
             .then(function(game) {
               io.to(gameName).emit('start judging', game);
@@ -252,6 +259,8 @@ io.on('connection', (socket) => {
   socket.on('ready to move on', (data) => {
     var gameName = data.gameName;
     var username = data.username;
+    var numPlayers = data.numPlayers;
+
     queries.retrieveGameInstance(gameName)
     .then(function(game) {
       var currentRound = game.currentRound;
@@ -260,7 +269,7 @@ io.on('connection', (socket) => {
         Rounds[currentRound].ready.push(username);
         queries.updateRounds(gameName, Rounds)
         .then(function() {
-          if (Rounds[currentRound].ready.length === 4) {
+          if (Rounds[currentRound].ready.length === numPlayers) {
             currentRound++;
             queries.updateCurrentRound(gameName, currentRound)
             .then(function() {
