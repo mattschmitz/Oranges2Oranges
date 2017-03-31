@@ -11,6 +11,7 @@ import ChooseWinner from './PlayingGameComponents/ChooseWinner.jsx';
 import Score from './PlayingGameComponents/Score.jsx';
 import CreatePrompt from './PlayingGameComponents/CreatePrompt.jsx';
 import JudgeCreatingPrompt from './PlayingGameComponents/JudgeCreatingPrompt.jsx';
+import ChatBox from './PlayingGameComponents/ChatBox.jsx';
 import { Col, PageHeader, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 
@@ -87,6 +88,7 @@ class PlayingGame extends React.Component{
           {stage === 1 && this.state.role === 'judge' && <ChooseWinner responses={responses} handleJudgeSelection={this.props.handleJudgeSelection}/>}
           {stage === 1 && this.state.role === 'player' && <SeeResponses responses={responses}/>}
           {stage === 2 && <Winner responses={responses} winner={winner} handleReadyToMoveOn={this.props.handleReadyToMoveOn}/>}
+          <ChatBox chats = {this.props.chats} handleChatSubmission = {this.props.handleChatSubmission} />
         </Col>
       </Col>
     )
