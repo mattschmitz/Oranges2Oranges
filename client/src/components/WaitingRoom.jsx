@@ -19,9 +19,11 @@ const WaitingRoom = (props) => {
       <Col sm={6} smOffset={3}>
         {props.game.host === props.user && <Button onClick={props.startgame}>Start Game!</Button>}
         <Rules/>
-        <ChatBox chats = {props.chats} handleChatSubmission = {props.handleChatSubmission}/>
+        
       </Col>
-      
+      <Col id='chat'>
+        <ChatBox chats = {props.chats} handleChatSubmission = {props.handleChatSubmission}/>
+        </Col>
     </Col>
     
 

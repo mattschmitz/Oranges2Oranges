@@ -33,6 +33,9 @@ class ChatBox extends React.Component {
             if(event.which !== 13) {
             this.props.handleChatSubmission(this.state.chat);
             this.state.chat = '';
+            setTimeout(function() {
+              this.refs.chat.scrollTop = this.refs.chat.scrollHeight;
+            }.bind(this), 1000);
           }
 
           }
@@ -49,9 +52,11 @@ class ChatBox extends React.Component {
 
 
     return (
-      <Col id="submit-prompt">
+      <Col >
           <h4>Chat with your opponents!</h4>
+          <div id="chatBox" ref="chat">
           {chats}
+          </div>
           {chatForm}
       </Col>
     )

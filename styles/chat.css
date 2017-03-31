@@ -1,28 +1,11 @@
+
 body {
-  background-color: #ffad33;
-/*  align-items: center;
-  justify-content: center;*/
-/*  display: flex;
-*/}
-
-#home, #home-header, #signup-header, #login-header, #lobby, #create-game, #game {
-  text-align: center;
+margin-bottom: 200%;
 }
 
-#create-game {
-  align-items: center;
-}
-
-#prompt, #meme-prompt{
-  font-size: 18px;
-}
-
-#response-item, #rules {
-  text-align: left;
-}
-
-#chatBox {
-border: 0px 0px 200px 0px;
+/* Box styles */
+.chatBox {
+border: none;
 padding: 5px;
 font: 24px/36px sans-serif;
 width: 200px;
