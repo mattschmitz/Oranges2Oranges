@@ -11,11 +11,12 @@ var random = [
 ]
 
 var memes = [
-  'memeOne',
-  'memeTwo',
-  'memeThree',
-  'memeFour',
-  'memeFive'
+  'beardface.jpg',
+  'koala.jpg',
+  'picard-wtf.jpg',
+  'woll-smoth.jpg',
+  'history-channel-alien-guy.jpg nic-cage-hippo.jpg',
+  'success-kid.jpg'
 ]
 
 var allPrompts = {
