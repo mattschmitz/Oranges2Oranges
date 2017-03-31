@@ -278,6 +278,16 @@ io.on('connection', (socket) => {
     })
   })
 
+  socket.on('chat created', (data) => {
+    var gameName = data.gameName;
+    var username = data.username;
+    var chat = data.chat;
+    var chats = data.chats;
+    chats.push(username + ': ' + chat);
+
+    io.to(gameName).emit('chat added', chats);
+  })
+
 
   // The commented out function is meant to be a way to handle disconnects
   // It requires some debugging to be functional, and is therefore currently
