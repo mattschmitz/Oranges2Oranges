@@ -5,9 +5,12 @@ module.exports.retrieveGameInstance = function(gameName) {
   return games.findOne({gameName: gameName});
 };
 
-module.exports.addPlayerToGameInstance = function(gameName, players) {
-
-  return games.update({gameName: gameName}, {$set: {players: players} });
+module.exports.addPlayerToGameInstance = function(gameName, players, host) {
+  if (host) {
+    return games.update({gameName: gameName}, {$set: {players: players, host: host} });
+  } else {
+    return games.update({gameName: gameName}, {$set: {players: players} });
+  }
 };
 
 module.exports.setGameInstanceGameStageToPlaying = function(gameName) {
