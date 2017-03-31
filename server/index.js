@@ -136,7 +136,7 @@ io.on('connection', (socket) => {
         var players = game.players.slice(0);
         players.push(username);
         if (players.length === 1) {
-          return queries.addPlayerToGameInstance(gameName, players, username);  
+          return queries.addPlayerToGameInstance(gameName, players, username);
         }
         return queries.addPlayerToGameInstance(gameName, players);
       }
@@ -151,7 +151,6 @@ io.on('connection', (socket) => {
   })
 
   socket.on('host start', function(data) {
-    console.log('Host has started game');
     socket.join(data.gameName);
     var username = data.username;
     var gameName = data.gameName;
@@ -159,12 +158,30 @@ io.on('connection', (socket) => {
     // update gameStage in db from waiting to playing
    queries.setGameInstanceGameStageToPlaying(gameName)
     .then(function () {
-      return queries.retrieveGameInstance(gameName)
+      return queries.retrieveGameInstance(gameName);
       .then(function (game) {
       // emit 'start game' event and send the game instance obj
         io.to(gameName).emit('start game', game);
       })
     });
+  });
+
+  socket.on('ready to start', (data) => {
+    var gameName = data.gameName;
+    var username = data.username;
+    queries.retrieveGameInstance(gameName)
+      .then(function(game) {
+        var numPlayers = game.players.length;
+        if (!game.allReady) {
+          game.allReady = [];
+        }
+        if (game.allReady.indexOf(username) === -1) {
+          game.allReady.push(username);
+        }
+        if (game.allReady.length === numPlayers - 1) {
+          io.to(gameName).emit('all ready', game);
+        }
+      })
   });
 
   socket.on('prompt created', (data) => {

@@ -3,7 +3,18 @@ import React from 'react';
 import Rules from './Rules.jsx';
 import { Col, PageHeader, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
 
+const getStyle = (game, player) => {
+  if (game.host === player) {
+    return 'info';
+  } else if (game.allReady) {
+    return game.allReady.indexOf(player) === -1 ? 'danger' : 'success';
+  } else {
+    return 'danger';
+  }
+}
+
 const WaitingRoom = (props) => {
+
   return (
     <Col id='waiting-room'>
       <PageHeader>{props.game.gameName} <small>Waiting Room</small></PageHeader>
@@ -12,11 +23,12 @@ const WaitingRoom = (props) => {
       <h4>Current Players:</h4>
       <Col sm={4} smOffset={4}>
         <ListGroup>
-          {props.game.players.map( (player) => <ListGroupItem>{player}</ListGroupItem>)}
+          {props.game.players.map( (player) => <ListGroupItem bsStyle={getStyle(props.game, player)}>{player}</ListGroupItem>)}
         </ListGroup>
       </Col>
       <Col sm={6} smOffset={3}>
-        {props.game.host === props.user && <Button onClick={props.startgame}>Start Game!</Button>}
+        {props.game.host === props.user && <Button disabled={props.buttonDisabled} onClick={props.startGame}>Start Game!</Button>}
+        {props.game.host !== props.user && <Button onClick={props.signalReady}>Ready to play!</Button>}
         <Rules/>
       </Col>
     </Col>
