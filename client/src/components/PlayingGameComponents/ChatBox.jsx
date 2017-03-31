@@ -27,8 +27,14 @@ class ChatBox extends React.Component {
           <FormControl type="text" placeholder="Say something nice..." onChange={this.handleInputChange} value={this.state.chat}/>
         </FormGroup>
         {' '}
-        <Button onClick={() => {
+        <Button onClick={(event) => {
+            event.preventDefault();
+            //if event not enter keypress
+            if(event.which !== 13) {
             this.props.handleChatSubmission(this.state.chat);
+            this.state.chat = '';
+          }
+
           }
         }>
           Submit

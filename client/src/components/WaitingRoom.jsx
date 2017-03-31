@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
 import Rules from './Rules.jsx';
+import ChatBox from './PlayingGameComponents/ChatBox.jsx';
 import { Col, PageHeader, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
 
 const WaitingRoom = (props) => {
@@ -18,8 +19,12 @@ const WaitingRoom = (props) => {
       <Col sm={6} smOffset={3}>
         {props.game.host === props.user && <Button onClick={props.startgame}>Start Game!</Button>}
         <Rules/>
+        <ChatBox chats = {props.chats} handleChatSubmission = {props.handleChatSubmission}/>
       </Col>
+      
     </Col>
+    
+
   )
 }
 
