@@ -15,9 +15,7 @@ var memes = [
   'koala.jpg',
   'picard-wtf.jpg',
   'woll-smoth.jpg',
-  'history-channel-alien-guy.jpg',
   'nic-cage-hippo.jpg',
-  'success-kid.jpg',
   'edward-chan.jpg'
 ]
 
