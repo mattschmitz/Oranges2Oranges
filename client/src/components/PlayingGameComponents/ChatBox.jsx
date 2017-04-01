@@ -24,10 +24,10 @@ class ChatBox extends React.Component {
     const chatForm = (
       <Form inline>
         <FormGroup controlId="formInlineResponse">
-          <FormControl type="text" placeholder="Say something nice..." onChange={this.handleInputChange} value={this.state.chat}/>
+          <FormControl id="chatInput" type="text" placeholder="Say something nice..." onChange={this.handleInputChange} value={this.state.chat}/>
         </FormGroup>
         {' '}
-        <Button onClick={(event) => {
+        <Button id="submitChat" onClick={(event) => {
             event.preventDefault();
             //if event not enter keypress
             if(event.which !== 13) {
