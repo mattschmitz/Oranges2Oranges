@@ -158,11 +158,11 @@ io.on('connection', (socket) => {
     // update gameStage in db from waiting to playing
    queries.setGameInstanceGameStageToPlaying(gameName)
     .then(function () {
-      return queries.retrieveGameInstance(gameName);
-      .then(function (game) {
-      // emit 'start game' event and send the game instance obj
-        io.to(gameName).emit('start game', game);
-      })
+      return queries.retrieveGameInstance(gameName)
+        .then(function (game) {
+        // emit 'start game' event and send the game instance obj
+          io.to(gameName).emit('start game', game);
+        })
     });
   });
 
