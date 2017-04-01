@@ -35,7 +35,7 @@ class ChatBox extends React.Component {
             this.state.chat = '';
             setTimeout(function() {
               this.refs.chat.scrollTop = this.refs.chat.scrollHeight;
-            }.bind(this), 1000);
+            }.bind(this), 500);
           }
 
           }
@@ -46,13 +46,13 @@ class ChatBox extends React.Component {
     )
 
     const chats = this.props.chats.map((chat) =>
-      <li>{chat}</li>
+      <div>{chat}</div>
       );
 
 
 
     return (
-      <Col >
+      <Col id="chat">
           <h4>Chat with your opponents!</h4>
           <div id="chatBox" ref="chat">
           {chats}

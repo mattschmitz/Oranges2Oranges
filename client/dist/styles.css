@@ -21,14 +21,26 @@ body {
   text-align: left;
 }
 
-#chatBox {
-border: 0px 0px 200px 0px;
-padding: 5px;
-font: 24px/36px sans-serif;
-width: 200px;
-height: 200px;
-overflow: scroll;
+#playing-game {
+	display: inline-block;
 }
+
+#game-chat {
+	display: inline-block;
+}
+
+
+#chatBox {
+margin: 0px 25px 10px 50px;
+padding: 0px 0px 0px 20px;
+font: 18px/24px sans-serif;
+width: 250px;
+height: 300px;
+overflow: scroll;
+text-align: left;
+background-color: white;
+}
+
 
 /* Scrollbar styles */
 ::-webkit-scrollbar {
