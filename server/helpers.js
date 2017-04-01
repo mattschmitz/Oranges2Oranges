@@ -21,7 +21,8 @@ var memes = [
 
 var allPrompts = {
   random: random, 
-  memes: memes
+  memes: memes,
+  drawing: memes,
 }
 
 var userAlreadySubmitted = function(username, responseArray) {

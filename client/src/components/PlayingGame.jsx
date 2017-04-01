@@ -2,6 +2,7 @@
 import React from 'react';
 import Prompt from './PlayingGameComponents/Prompt.jsx';
 import MemePrompt from './PlayingGameComponents/MemePrompt.jsx';
+import DrawMemePrompt from './PlayingGameComponents/DrawMemePrompt.jsx';
 import CurrentJudge from './PlayingGameComponents/CurrentJudge.jsx';
 import PlayersResponding from './PlayingGameComponents/PlayersResponding.jsx';
 import SeeResponses from './PlayingGameComponents/SeeResponses.jsx';
@@ -78,8 +79,9 @@ class PlayingGame extends React.Component{
             <Score game={this.props.game}/>
           </Col>
           <Col sm={6} smOffset={3}>
-            {stage !== -1 && category !== 'memes' && <Prompt prompt={curPrompt}/>}        
+            {stage !== -1 && category === 'random' && <Prompt prompt={curPrompt}/>}        
             {stage !== -1 && category === 'memes' && <MemePrompt prompt={curPrompt}/>}
+            {stage !== -1 && category === 'drawing' && <DrawMemePrompt prompt={curPrompt}/>}
           </Col>
         <Col sm={6} smOffset={3}>
         {stage === -1 && this.state.role === 'judge' && <CreatePrompt handlePromptSubmission={this.props.handlePromptSubmission}/>}

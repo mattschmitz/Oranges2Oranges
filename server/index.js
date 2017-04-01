@@ -26,11 +26,14 @@ app.use(passport.session());
 
 app.use(function(req,res,done) {
   console.log('req.url:' + req.url + '\n');
+  console.log('__dirname: ' + __dirname + '/../lib' + req.url)
   done();
 })
 
 app.use(express.static(__dirname + '/../client/dist'));
+app.use(express.static(__dirname + '/../lib'))
 app.use(express.static(__dirname + '/assets/memes'))
+
 
 // passport config
 passport.use(new LocalStrategy(User.authenticate()));
