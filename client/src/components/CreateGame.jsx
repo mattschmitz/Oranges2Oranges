@@ -25,7 +25,7 @@ class CreateGame extends React.Component {
     this.setState({gameName: filteredGameName});
   }
 
-  addGameToDB(gameName, promptType, callback) {
+  addGameToDB(gameName, promptType, callback, updateGames) {
 
     ////change to be strings
     var initialStage = (promptType === 'random' || promptType === 'memes' || promptType === 'drawing') ? 0 : -1;
@@ -50,6 +50,7 @@ class CreateGame extends React.Component {
       data: JSON.stringify(gameInstance),
       success: (data) => {
         callback(gameName);
+        updateGames();
       },
       error: (err) => {
         console.log('error in login POST: ', err);
@@ -79,7 +80,7 @@ class CreateGame extends React.Component {
             <MenuItem eventKey="3" onSelect={() => this.handlePromptTypeSelection('memes')}>Memes</MenuItem>
             <MenuItem eventKey="4" onSelect={() => this.handlePromptTypeSelection('drawing')}>Drawing</MenuItem>
           </DropdownButton>
-          <Button bsSize="small" onClick={() => this.addGameToDB(this.state.gameName, this.state.promptType, this.props.sendToGame)}>Submit</Button>
+          <Button bsSize="small" onClick={() => this.addGameToDB(this.state.gameName, this.state.promptType, this.props.sendToGame, this.props.handleGameAddition)}>Submit</Button>
       </div>
     )
   }

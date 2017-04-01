@@ -125,6 +125,10 @@ var Rooms = {};
 io.on('connection', (socket) => {
   console.log('a user connected to the socket');
 
+  socket.on('game added', function(data) {
+    io.emit('update games list');
+  })
+
   socket.on('join game', function(data) {
     socket.join(data.gameName);
     var username = data.username;
