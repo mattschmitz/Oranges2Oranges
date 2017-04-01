@@ -318,6 +318,21 @@ io.on('connection', (socket) => {
     io.to(gameName).emit('chat added', chats);
   })
 
+  socket.on('exit game', function(data) {
+    var username = data.username;
+    var gameName = data.gameName;
+    queries.retrieveGameInstance(gameName)
+    .then(function(game) {
+      var players = game.players.slice(0);
+      if (players.length > 1) {
+          return queries.removePlayerFromGameInstance(gameName, players, username);  
+        }
+        else {
+          return queries.deleteGameInstance(gameName);
+        }
+    })
+  })
+
 
   // The commented out function is meant to be a way to handle disconnects
   // It requires some debugging to be functional, and is therefore currently

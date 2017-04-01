@@ -156,6 +156,10 @@ class Game extends React.Component {
     socket.emit('chat created', {gameName: this.props.params.gamename, username: this.state.username, chats: this.state.chats, chat: chat});
   }
 
+  handleExitGame() {
+    socket.emit('exit game', {gameName: this.props.params.gamename, username: this.state.username})
+  }
+
   render() {
     let stl;
     if (this.props.route) {
@@ -168,7 +172,7 @@ class Game extends React.Component {
       <div id="game">
         {this.state.game && this.state.username && this.state.game.gameStage === 'waiting' && <WaitingRoom game={this.state.game} buttonDisabled={this.state.disabled} user={this.state.username} startGame={this.startGame} signalReady={this.signalReady} chats={this.state.chats} handleChatSubmission={this.handleChatSubmission} />}
         {this.state.game && this.state.username && this.state.game.gameStage === 'playing' && <PlayingGame game={this.state.game} user={this.state.username} chats={this.state.chats} handleResponse={this.handleResponse} handlePromptSubmission={this.handlePromptSubmission} handleJudgeSelection={this.handleJudgeSelection} handleReadyToMoveOn={this.handleReadyToMoveOn} handleChatSubmission={this.handleChatSubmission}/>}
-        {this.state.game && this.state.username && this.state.game.gameStage === 'gameover' && <EndOfGame game={this.state.game} sendToLobby={stl}/>}
+        {this.state.game && this.state.username && this.state.game.gameStage === 'gameover' && <EndOfGame game={this.state.game} sendToLobby={stl} handleExitGame={this.handleExitGame}/>}
       </div>
     )
   }
