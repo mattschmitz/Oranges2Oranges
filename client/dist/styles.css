@@ -20,3 +20,44 @@ body {
 #response-item, #rules {
   text-align: left;
 }
+
+#playing-game {
+	display: inline-block;
+}
+
+#game-chat {
+	display: inline-block;
+}
+
+
+#chatBox {
+margin: 0px 25px 10px 50px;
+padding: 0px 0px 0px 20px;
+font: 18px/24px sans-serif;
+width: 250px;
+height: 300px;
+overflow: scroll;
+text-align: left;
+background-color: white;
+}
+
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+width: 12px;
+height: 12px;
+}
+
+::-webkit-scrollbar-track {
+border: 1px solid yellowgreen;
+border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+background: yellowgreen;  
+border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #88ba1c;  
+}
