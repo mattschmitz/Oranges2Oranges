@@ -124,21 +124,14 @@ class Game extends React.Component {
     });
   }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> Host can start game with any number of players
   startGame() {
     socket.emit('host start', {gameName: this.props.params.gamename, username: this.state.username});
   }
 
-<<<<<<< HEAD
-=======
   signalReady() {
     socket.emit('ready to start', {gameName: this.props.params.gamename, username: this.state.username});
   }
 
->>>>>>> Host can start game with any number of players
   handleResponse(response) {
     socket.emit('submit response', {gameName: this.props.params.gamename, numPlayers: this.state.game.players.length, username: this.state.username, response: response});
   }
