@@ -42,7 +42,7 @@ const yourGames = mount(<YourGames games={[{gameName: 'Jest Test 1', id: 1}, {ga
 const gameList = mount(<GameList games={[]} sendToGame={fun} />);
 const gameListEntry = mount(<GameListEntry sendToGame={fun} name={'JestTest'} key={1} game={{players: [], rounds:[{stage: 0}]}} />);
 const game = mount(<Game sendToLobby={fun} />);
-const waitingRoom = mount(<WaitingRoom game={{gameName: 'JestTest', players: [], rounds:[], gameStage: 0}} user={'JestTest'} />);
+const waitingRoom = mount(<WaitingRoom chats={[]} game={{gameName: 'JestTest', players: [], rounds:[], gameStage: 0}} user={'JestTest'} />);
 const playingGame = mount(<PlayingGame chats={[]} game={{gameName: 'JestTest', players: [], currentRound: 0, rounds:[{prompt: 'Jest Prompt', winner: 'Jest'}], gameStage: 0}} user={'JestTest'} handleResponse={fun} handlePromptSubmission={fun} handleJudgeSelection={fun} handleReadyToMoveOn={fun}/>);
 const endOfGame = mount(<EndOfGame game={{gameName: 'JestTest', players: [], currentRound: 0, rounds:[{prompt: 'Jest Prompt 1', winner: 'Jest', responses: []}, {prompt: 'Jest Prompt 2', winner: 'Jest', responses: []}, {prompt: 'Jest Prompt 3', winner: 'Jest', responses: []}, {prompt: 'Jest Prompt 4', winner: 'Jest', responses: []}], gameStage: 0}} sendToLobby={fun}/>);
 const rules = mount(<Rules />);

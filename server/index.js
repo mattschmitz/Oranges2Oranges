@@ -211,39 +211,37 @@ io.on('connection', (socket) => {
     var gameName = data.gameName;
     var username = data.username;
     var response = data.response;
-    var numPlayers = data.numPlayers - 1;
 
     queries.retrieveGameInstance(gameName)
-    .then(function(game) {
-      var currentRound = game.currentRound;
-      var currentResponses = game.rounds[currentRound].responses;
-      var currentRounds = game.rounds;
-
-      if (!helpers.userAlreadySubmitted(username, currentResponses)) {
-        currentRounds[currentRound].responses.push([response, username]);
-
-        if (currentRounds[currentRound].responses.length === numPlayers) {
-          currentRounds[currentRound].stage++;
-        }
-        //update rounds property of the game in DB w/ new responses and stage
-        return queries.updateRounds(gameName, currentRounds)
-        .then(function() {
-        // check if there are 3 responses
-          // if there are 3 responses go to current Round in round array and increment stage by 1
-          // retrieve updated game from DB
-          // emit 'start judging' with game instance obj as data
+      .then(function(game) {
+        var currentRound = game.currentRound;
+        var currentResponses = game.rounds[currentRound].responses;
+        var currentRounds = game.rounds;
+        var numPlayers = game.players.length - 1;
+        if (!helpers.userAlreadySubmitted(username, currentResponses)) {
+          currentRounds[currentRound].responses.push([response, username]);
           if (currentRounds[currentRound].responses.length === numPlayers) {
-            return queries.retrieveGameInstance(gameName)
-            .then(function(game) {
-              io.to(gameName).emit('start judging', game);
-            })
+            currentRounds[currentRound].stage++;
           }
-        })
-      }
-    }).catch(function(error) {
-      console.log(error);
-      throw error;
-    })
+          //update rounds property of the game in DB w/ new responses and stage
+          return queries.updateRounds(gameName, currentRounds)
+          .then(function() {
+          // check if there are 3 responses
+            // if there are 3 responses go to current Round in round array and increment stage by 1
+            // retrieve updated game from DB
+            // emit 'start judging' with game instance obj as data
+            if (currentRounds[currentRound].responses.length === numPlayers) {
+              return queries.retrieveGameInstance(gameName)
+                .then(function(game) {
+                  io.to(gameName).emit('start judging', game);
+                })
+            }
+          })
+        }
+      }).catch(function(error) {
+        console.log(error);
+        throw error;
+      })
   })
 
 
@@ -282,32 +280,32 @@ io.on('connection', (socket) => {
   socket.on('ready to move on', (data) => {
     var gameName = data.gameName;
     var username = data.username;
-    var numPlayers = data.numPlayers;
 
     queries.retrieveGameInstance(gameName)
-    .then(function(game) {
-      var currentRound = game.currentRound;
-      var Rounds = game.rounds.slice(0);
-      if (Rounds[currentRound].ready.indexOf(username) === -1) {
-        Rounds[currentRound].ready.push(username);
-        queries.updateRounds(gameName, Rounds)
-        .then(function() {
-          if (Rounds[currentRound].ready.length === numPlayers) {
-            currentRound++;
-            queries.updateCurrentRound(gameName, currentRound)
-            .then(function() {
-              queries.retrieveGameInstance(gameName)
-              .then(function(game) {
-                io.to(gameName).emit('start next round', game);
+      .then(function(game) {
+        var currentRound = game.currentRound;
+        var Rounds = game.rounds.slice(0);
+        var numPlayers = game.players.length;
+        if (Rounds[currentRound].ready.indexOf(username) === -1) {
+          Rounds[currentRound].ready.push(username);
+          queries.updateRounds(gameName, Rounds)
+          .then(function() {
+            if (Rounds[currentRound].ready.length === numPlayers) {
+              currentRound++;
+              queries.updateCurrentRound(gameName, currentRound)
+              .then(function() {
+                queries.retrieveGameInstance(gameName)
+                .then(function(game) {
+                  io.to(gameName).emit('start next round', game);
+                })
               })
-            })
-          }
-        })
-      }
-    }).catch(function(error) {
-      console.log(error);
-      throw error;
-    })
+            }
+          })
+        }
+      }).catch(function(error) {
+        console.log(error);
+        throw error;
+      })
   })
 
   socket.on('chat created', (data) => {

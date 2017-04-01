@@ -21,7 +21,7 @@ const yourGames = mount(<YourGames games={[{gameName: 'Jest Test 1', id: 1}, {ga
 const gameList = mount(<GameList games={[]} sendToGame={fun} />);
 const gameListEntry = mount(<GameListEntry sendToGame={fun} name={'JestTest'} key={1} game={{players: [], rounds:[{stage: 0}]}} />);
 const game = mount(<Game sendToLobby={fun} />);
-let waitingRoom = mount(<WaitingRoom game={{gameName: 'JestTest', players: [], rounds:[], gameStage: 0}} user={'JestTest'} />);
+let waitingRoom = mount(<WaitingRoom chats={[]} game={{gameName: 'JestTest', players: [], rounds:[], gameStage: 0}} user={'JestTest'} />);
 const playingGame = mount(<PlayingGame chats={[]} game={{gameName: 'JestTest', players: [], currentRound: 0, rounds:[{prompt: 'Jest Prompt', winner: 'Jest'}], gameStage: 0}} user={'JestTest'} handleResponse={fun} handlePromptSubmission={fun} handleJudgeSelection={fun} handleReadyToMoveOn={fun}/>);
 const endOfGame = mount(<EndOfGame game={{gameName: 'JestTest', players: [], currentRound: 0, rounds:[{prompt: 'Jest Prompt 1', winner: 'Jest', responses: []}, {prompt: 'Jest Prompt 2', winner: 'Jest', responses: []}, {prompt: 'Jest Prompt 3', winner: 'Jest', responses: []}, {prompt: 'Jest Prompt 4', winner: 'Jest', responses: []}], gameStage: 0}} sendToLobby={fun}/>);
 const rules = mount(<Rules />);
@@ -66,23 +66,24 @@ describe('Individual Component Rendering (CreateGame - RoundSummary):', () => {
     expect(waitingRoom.find('PageHeader').length).toBe(1);
     // Not sure why ListGroup seems to return 2
     expect(waitingRoom.find('ListGroup').length).toBe(2);
-    expect(waitingRoom.find('Button').length).toBe(1);
+    expect(waitingRoom.find('Button').length).toBe(2);
     expect(waitingRoom.find('Rules').length).toBe(1);
   })
 
   it('WaitingRoom should render Button with text "Start Game!" when user is the host', () => {
-    waitingRoom = mount(<WaitingRoom game={{gameName: 'JestTest', host: 'JestTest', players: [], rounds:[], gameStage: 0}} user={'JestTest'} />);
-    expect(waitingRoom.find('Button').text()).toBe('Start Game!');
+    waitingRoom = mount(<WaitingRoom chats={[]} game={{gameName: 'JestTest', host: 'JestTest', players: [], rounds:[], gameStage: 0}} user={'JestTest'} />);
+    expect(waitingRoom.find('Button').at(0).text()).toBe('Start Game!');
   })
 
   it('WaitingRoom should render Button with text "Ready to play!" when user is not the host', () => {
-    waitingRoom = mount(<WaitingRoom game={{gameName: 'JestTest', host: 'JestTest', players: [], rounds:[], gameStage: 0}} user={'NotJestTest'} />);
-    expect(waitingRoom.find('Button').text()).toBe('Ready to play!');
+    waitingRoom = mount(<WaitingRoom chats={[]} game={{gameName: 'JestTest', host: 'JestTest', players: [], rounds:[], gameStage: 0}} user={'NotJestTest'} />);
+    expect(waitingRoom.find('Button').at(0).text()).toBe('Ready to play!');
   })
 
-  it('PlayingGame should render Col with id #playing-game, PageHeader, and Score', () => {
-    expect(playingGame.find('Col #playing-game').length).toBe(1);
+  it('PlayingGame should render Col with id #playing-game, PageHeader, ChatBox, and Score', () => {
+    expect(playingGame.find('div #playing-game').length).toBe(1);
     expect(playingGame.find('PageHeader').length).toBe(1);
+    expect(playingGame.find('ChatBox').length).toBe(1);
     expect(playingGame.find('Score').length).toBe(1);
   })
 
