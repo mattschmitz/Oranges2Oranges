@@ -71,6 +71,10 @@ class Game extends React.Component {
       this.getGameData(this.props.params.gamename);
       this.getUsername();
     }
+
+    if (this.state.game && this.state.game.gameStage === 'w') {
+      this.setState({game: {gameStage: 'waiting'}});
+    }
   }
 
   socketHandlers() {
@@ -133,7 +137,7 @@ class Game extends React.Component {
   }
 
   handleResponse(response) {
-    socket.emit('submit response', {gameName: this.props.params.gamename, numPlayers: this.state.game.players.length, username: this.state.username, response: response});
+    socket.emit('submit response', {gameName: this.props.params.gamename, username: this.state.username, response: response});
   }
 
   handleJudgeSelection(winner) {
@@ -141,7 +145,7 @@ class Game extends React.Component {
   }
 
   handleReadyToMoveOn() {
-    socket.emit('ready to move on', {gameName: this.props.params.gamename, numPlayers: this.state.game.players.length, username: this.state.username});
+    socket.emit('ready to move on', {gameName: this.props.params.gamename, username: this.state.username});
   }
 
   handlePromptSubmission(prompt) {
@@ -162,7 +166,7 @@ class Game extends React.Component {
 
     return (
       <div id="game">
-        {this.state.game && this.state.username && this.state.game.gameStage === 'waiting' && <WaitingRoom game={this.state.game} buttonDisabled={this.state.disabled} user={this.state.username} startGame={this.startGame} signalReady={this.signalReady} />}
+        {this.state.game && this.state.username && this.state.game.gameStage === 'waiting' && <WaitingRoom game={this.state.game} buttonDisabled={this.state.disabled} user={this.state.username} startGame={this.startGame} signalReady={this.signalReady} chats={this.state.chats} handleChatSubmission={this.handleChatSubmission} />}
         {this.state.game && this.state.username && this.state.game.gameStage === 'playing' && <PlayingGame game={this.state.game} user={this.state.username} chats={this.state.chats} handleResponse={this.handleResponse} handlePromptSubmission={this.handlePromptSubmission} handleJudgeSelection={this.handleJudgeSelection} handleReadyToMoveOn={this.handleReadyToMoveOn} handleChatSubmission={this.handleChatSubmission}/>}
         {this.state.game && this.state.username && this.state.game.gameStage === 'gameover' && <EndOfGame game={this.state.game} sendToLobby={stl}/>}
       </div>

@@ -27,8 +27,17 @@ class ChatBox extends React.Component {
           <FormControl type="text" placeholder="Say something nice..." onChange={this.handleInputChange} value={this.state.chat}/>
         </FormGroup>
         {' '}
-        <Button onClick={() => {
+        <Button onClick={(event) => {
+            event.preventDefault();
+            //if event not enter keypress
+            if(event.which !== 13) {
             this.props.handleChatSubmission(this.state.chat);
+            this.state.chat = '';
+            setTimeout(function() {
+              this.refs.chat.scrollTop = this.refs.chat.scrollHeight;
+            }.bind(this), 500);
+          }
+
           }
         }>
           Submit
@@ -37,15 +46,17 @@ class ChatBox extends React.Component {
     )
 
     const chats = this.props.chats.map((chat) =>
-      <li>{chat}</li>
+      <div>{chat}</div>
       );
 
 
 
     return (
-      <Col id="submit-prompt">
+      <Col id="chat">
           <h4>Chat with your opponents!</h4>
+          <div id="chatBox" ref="chat">
           {chats}
+          </div>
           {chatForm}
       </Col>
     )
