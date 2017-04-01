@@ -17,7 +17,8 @@ class Game extends React.Component {
     this.state = {
       game: null,
       username: null,
-      chats: []
+      chats: [],
+      disabled: true
     };
 
     this.getGameData = this.getGameData.bind(this);
@@ -27,6 +28,8 @@ class Game extends React.Component {
     this.handleJudgeSelection = this.handleJudgeSelection.bind(this);
     this.handleReadyToMoveOn = this.handleReadyToMoveOn.bind(this);
     this.handleChatSubmission = this.handleChatSubmission.bind(this);
+    this.startGame = this.startGame.bind(this);
+    this.signalReady = this.signalReady.bind(this);
 
     socket.on('update waiting room', (gameObj) => {
       this.setState({game: gameObj});
@@ -55,6 +58,10 @@ class Game extends React.Component {
     socket.on('disconnectTimeOut', () => {
       console.log('disconnectTimeOut')
       this.props.route.sendToLobby.call(this, true);
+    })
+    socket.on('all ready', (gameObj) => {
+      console.log('All Players Ready');
+      this.setState({game: gameObj, disabled: false});
     })
 
   }
@@ -121,6 +128,14 @@ class Game extends React.Component {
     });
   }
 
+  startGame() {
+    socket.emit('host start', {gameName: this.props.params.gamename, username: this.state.username});
+  }
+
+  signalReady() {
+    socket.emit('ready to start', {gameName: this.props.params.gamename, username: this.state.username});
+  }
+
   handleResponse(response) {
     socket.emit('submit response', {gameName: this.props.params.gamename, username: this.state.username, response: response});
   }
@@ -151,7 +166,7 @@ class Game extends React.Component {
 
     return (
       <div id="game">
-        {this.state.game && this.state.username && this.state.game.gameStage === 'waiting' && <WaitingRoom game={this.state.game} user={this.state.username} chats={this.state.chats} handleChatSubmission={this.handleChatSubmission}/>}
+        {this.state.game && this.state.username && this.state.game.gameStage === 'waiting' && <WaitingRoom game={this.state.game} buttonDisabled={this.state.disabled} user={this.state.username} startGame={this.startGame} signalReady={this.signalReady} chats={this.state.chats} handleChatSubmission={this.handleChatSubmission} />}
         {this.state.game && this.state.username && this.state.game.gameStage === 'playing' && <PlayingGame game={this.state.game} user={this.state.username} chats={this.state.chats} handleResponse={this.handleResponse} handlePromptSubmission={this.handlePromptSubmission} handleJudgeSelection={this.handleJudgeSelection} handleReadyToMoveOn={this.handleReadyToMoveOn} handleChatSubmission={this.handleChatSubmission}/>}
         {this.state.game && this.state.username && this.state.game.gameStage === 'gameover' && <EndOfGame game={this.state.game} sendToLobby={stl}/>}
       </div>
