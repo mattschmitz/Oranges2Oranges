@@ -6,9 +6,12 @@ import DrawMemePrompt from './PlayingGameComponents/DrawMemePrompt.jsx';
 import CurrentJudge from './PlayingGameComponents/CurrentJudge.jsx';
 import PlayersResponding from './PlayingGameComponents/PlayersResponding.jsx';
 import SeeResponses from './PlayingGameComponents/SeeResponses.jsx';
+import SeeResponsesDrawing from './PlayingGameComponents/SeeResponsesDrawing.jsx';
 import Winner from './PlayingGameComponents/Winner.jsx'
+import WinnerDrawing from './PlayingGameComponents/WinnerDrawing.jsx'
 import RespondToPrompt from './PlayingGameComponents/RespondToPrompt.jsx';
 import ChooseWinner from './PlayingGameComponents/ChooseWinner.jsx';
+import ChooseWinnerDrawing from './PlayingGameComponents/ChooseWinnerDrawing.jsx';
 import Score from './PlayingGameComponents/Score.jsx';
 import CreatePrompt from './PlayingGameComponents/CreatePrompt.jsx';
 import JudgeCreatingPrompt from './PlayingGameComponents/JudgeCreatingPrompt.jsx';
@@ -81,16 +84,21 @@ class PlayingGame extends React.Component{
           <Col sm={6} smOffset={3}>
             {stage !== -1 && category === 'random' && <Prompt prompt={curPrompt}/>}        
             {stage !== -1 && category === 'memes' && <MemePrompt prompt={curPrompt}/>}
-            {stage !== -1 && category === 'drawing' && <DrawMemePrompt prompt={curPrompt}/>}
+            {stage !== -1 && category === 'drawing' && <DrawMemePrompt handleResponse={this.props.handleResponse} role={this.state.role} prompt={curPrompt}/>}
           </Col>
         <Col sm={6} smOffset={3}>
-        {stage === -1 && this.state.role === 'judge' && <CreatePrompt handlePromptSubmission={this.props.handlePromptSubmission}/>}
-        {stage === -1 && this.state.role === 'player' && <JudgeCreatingPrompt judge={curJudge}/>}
-        {stage === 0 && this.state.role === 'judge' && <PlayersResponding />}
-        {stage === 0 && this.state.role === 'player' && <RespondToPrompt handleResponse={this.props.handleResponse}/>}
-        {stage === 1 && this.state.role === 'judge' && <ChooseWinner responses={responses} handleJudgeSelection={this.props.handleJudgeSelection}/>}
-        {stage === 1 && this.state.role === 'player' && <SeeResponses responses={responses}/>}
-        {stage === 2 && <Winner responses={responses} winner={winner} handleReadyToMoveOn={this.props.handleReadyToMoveOn}/>}
+
+          {stage === -1 && this.state.role === 'judge' && <CreatePrompt handlePromptSubmission={this.props.handlePromptSubmission}/>}
+          {stage === -1 && this.state.role === 'player' && <JudgeCreatingPrompt judge={curJudge}/>}
+          {stage === 0 && this.state.role === 'player' && category !== 'drawing' && <RespondToPrompt handleResponse={this.props.handleResponse}/>}
+          {stage === 0 && this.state.role === 'judge' && <PlayersResponding />}
+          {stage === 1 && this.state.role === 'judge' && category === 'drawing' && <ChooseWinnerDrawing prompt={curPrompt} responses={responses} handleJudgeSelection={this.props.handleJudgeSelection}/>}
+          {stage === 1 && this.state.role === 'player' && category === 'drawing' && <SeeResponsesDrawing prompt={curPrompt} responses={responses}/>}
+          {stage === 1 && this.state.role === 'judge' && category !== 'drawing' && <ChooseWinner responses={responses} handleJudgeSelection={this.props.handleJudgeSelection}/>}
+          {stage === 1 && this.state.role === 'player' && category !== 'drawing' && <SeeResponses responses={responses}/>}
+          {stage === 2 && category !== 'drawing' && <Winner responses={responses} winner={winner} handleReadyToMoveOn={this.props.handleReadyToMoveOn} />}
+          {stage === 2 && category === 'drawing' && <WinnerDrawing responses={responses} winner={winner} handleReadyToMoveOn={this.props.handleReadyToMoveOn} />}
+          <ChatBox chats = {this.props.chats} handleChatSubmission = {this.props.handleChatSubmission} />
         </Col>
       </div>
       <div id="game-chat">

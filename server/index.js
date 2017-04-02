@@ -26,7 +26,6 @@ app.use(passport.session());
 
 app.use(function(req,res,done) {
   console.log('req.url:' + req.url + '\n');
-  console.log('__dirname: ' + __dirname + '/../lib' + req.url)
   done();
 })
 
