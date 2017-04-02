@@ -30,6 +30,7 @@ class Game extends React.Component {
     this.handleChatSubmission = this.handleChatSubmission.bind(this);
     this.startGame = this.startGame.bind(this);
     this.signalReady = this.signalReady.bind(this);
+    this.handleExitGame = this.handleExitGame.bind(this);
 
     socket.on('update waiting room', (gameObj) => {
       this.setState({game: gameObj});
@@ -157,6 +158,7 @@ class Game extends React.Component {
   }
 
   handleExitGame() {
+    console.log('about to emit');
     socket.emit('exit game', {gameName: this.props.params.gamename, username: this.state.username})
   }
 

@@ -319,6 +319,7 @@ io.on('connection', (socket) => {
   })
 
   socket.on('exit game', function(data) {
+    console.log('player exited, data: ', data)
     var username = data.username;
     var gameName = data.gameName;
     queries.retrieveGameInstance(gameName)
