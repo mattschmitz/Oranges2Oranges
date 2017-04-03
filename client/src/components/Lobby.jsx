@@ -5,11 +5,14 @@ import $ from 'jquery';
 import CreateGame from './CreateGame.jsx';
 import YourGames from './YourGames.jsx';
 import PlayerDisconnected from './PlayerDisconnected.jsx'
+import io from 'socket.io-client';
 import { Button, Form, FormGroup, Col, FormControl, ControlLabel, PageHeader } from 'react-bootstrap';
 var hostUrl = process.env.LIVE_URL || 'http://localhost:3000/';
 
 //TODO:
   // build logic to prevent users from joining a full game
+
+const socket = io();
 
 class Lobby extends React.Component {
   constructor(props) {
@@ -19,6 +22,11 @@ class Lobby extends React.Component {
       username: null
     }
     this.getGames = this.getGames.bind(this);
+    this.handleGameAddition = this.handleGameAddition.bind(this);
+
+    socket.on('update games list', () => {
+      this.getGames();
+    })
   }
 
   componentDidMount() {
@@ -59,6 +67,10 @@ class Lobby extends React.Component {
     });
   }
 
+  handleGameAddition() {
+    socket.emit('game added');
+  }
+
   render() {
     let stg;
     // React router will pass props down through this.props.route
@@ -75,7 +87,7 @@ class Lobby extends React.Component {
       <Col id="lobby" sm={6} smOffset={3}>
         <PageHeader>Lobby</PageHeader>
         {this.props.disconnectTimeOut && <PlayerDisconnected/>}
-        <CreateGame sendToGame={stg}/>
+        <CreateGame sendToGame={stg} handleGameAddition= {this.handleGameAddition}/>
         {this.state.games && <YourGames games={this.state.games} username={this.state.username} sendToGame={stg}/>}
         <h4>Current Games:</h4>
         {this.state.games && <GameList games={this.state.games} sendToGame={stg}/>}
