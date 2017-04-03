@@ -29,6 +29,8 @@ import SeeResponses from './../client/src/components/PlayingGameComponents/SeeRe
 import Winner from './../client/src/components/PlayingGameComponents/Winner.jsx';
 import CurrentJudge from './../client/src/components/PlayingGameComponents/CurrentJudge.jsx';
 import GameWinner from './../client/src/components/PlayingGameComponents/GameWinner.jsx';
+import ChatBox from './../client/src/components/PlayingGameComponents/ChatBox.jsx';
+
 
 // Initialize all of our components for testing
 const fun = jest.fn();
@@ -59,6 +61,7 @@ const seeResponses = mount(<SeeResponses responses={[]} />);
 const winner = mount(<Winner responses={[]} winner={'Jest'} handleReadyToMoveOn={fun} />);
 const currentJudge = mount(<CurrentJudge judge={'Judge Jest'} />);
 const gameWinner = mount(<GameWinner game={{gameName: 'JestTest', players: [], currentRound: 0, rounds:[{prompt: 'Jest Prompt 1', winner: 'Jest', responses: []}, {prompt: 'Jest Prompt 2', winner: 'Jest', responses: []}, {prompt: 'Jest Prompt 3', winner: 'Jest', responses: []}, {prompt: 'Jest Prompt 4', winner: 'Jest', responses: []}], gameStage: 0}} />);
+const chatBox = mount(<ChatBox chats={[]} handleChatSubmission={fun} />);
 
 // Make sure all components mounted properly
 describe('Mounting components:', () => {
@@ -169,6 +172,10 @@ describe('Mounting components:', () => {
 
   it('GameWinner should mount', () => {
     expect(gameWinner).toBeDefined();
+  })
+
+  it('ChatBox should mount', () => {
+    expect(chatBox).toBeDefined();
   })
 
 
