@@ -25,6 +25,7 @@ const EndOfGame = (props) => {
 			  <br />
         <Button onClick={() => {
             props.sendToLobby()
+            props.handleExitGame()
           }
         }>
           Return to Lobby

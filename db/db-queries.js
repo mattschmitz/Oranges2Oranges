@@ -13,6 +13,11 @@ module.exports.addPlayerToGameInstance = function(gameName, players, host) {
   }
 };
 
+module.exports.removePlayerFromGameInstance = function(gameName, players, player) {
+  players.splice(players.indexOf(player));
+  return games.update({gameName: gameName}, {$set: {players: players} });
+}
+
 module.exports.setGameInstanceGameStageToPlaying = function(gameName) {
 
   return games.update({gameName: gameName}, { $set: {gameStage: 'playing'} });
@@ -32,3 +37,8 @@ module.exports.setGameInstanceGameStageToGameOver = function(gameName) {
 
   return games.update({gameName: gameName}, { $set: {gameStage: 'gameover'} });
 };
+
+module.exports.deleteGameInstance = function(gameName) {
+
+  return games.remove({gameName: gameName})
+}
