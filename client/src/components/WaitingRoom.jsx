@@ -24,7 +24,7 @@ const WaitingRoom = (props) => {
       <h4>Current Players:</h4>
       <Col sm={4} smOffset={4}>
         <ListGroup>
-          {props.game.players.map( (player) => <ListGroupItem bsStyle={getStyle(props.game, player)}>{player}</ListGroupItem>)}
+          {props.game.players.map( (player) => <ListGroupItem key={player} bsStyle={getStyle(props.game, player)}>{player}</ListGroupItem>)}
         </ListGroup>
       </Col>
       <Col sm={6} smOffset={3}>
