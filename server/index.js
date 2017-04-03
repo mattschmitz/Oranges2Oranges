@@ -30,7 +30,9 @@ app.use(function(req,res,done) {
 })
 
 app.use(express.static(__dirname + '/../client/dist'));
+app.use(express.static(__dirname + '/../lib'))
 app.use(express.static(__dirname + '/assets/memes'))
+
 
 // passport config
 passport.use(new LocalStrategy(User.authenticate()));
