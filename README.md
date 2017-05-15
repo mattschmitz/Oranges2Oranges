@@ -36,9 +36,9 @@
 ### Installing Dependencies
 
 From within the root directory:
-
+```
 npm install
-
+```
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
