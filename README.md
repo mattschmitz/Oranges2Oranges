@@ -1,26 +1,25 @@
-# Oranges to Apples
+# Oranges2Oranges
 
-> A four-round multiplayer game where players attempt to come up with the funniest responses to thought-provoking questions.
+> A real-time multiplayer game suite. Players attempt to come up with the funniest responses to thought-provoking questions, the funniest doodles atop random images, and the best overlays for classic memes. 
 
-## Team
+## Contributors
 
 - Scott Clendening
 - Paul Mills
 - Neil Ricci
+- Justin Yoo (justinjyoo)
+- Matt Schmitz (mattschmitz)
+- Tyler Walker (twalk4821)
+- Innie Kim (ijongkim)
 
 ## Table of Contents
 
-1. [Usage](#Usage)
 1. [Requirements](#requirements)
 1. [Development](#development)
-1. [Installing Dependencies](#installing-dependencies)
-1. [Tasks](#tasks)
-1. [Roadmap](#roadmap)
+    1. [Installing Dependencies](#installing-dependencies)
 1. [Contributing](#contributing)
-
-## Usage
-
-> Some usage instructions
+1. [Testing](#testing)
+1. [License](#license)
 
 ## Requirements
 
@@ -40,12 +39,16 @@ From within the root directory:
 
 npm install
 
-
-### Roadmap
-
-View the project roadmap [here]
-
-
 ## Contributing
 
-See [CONTRIBUTING.md]
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+## Testing
+
+From within the root directory:
+```
+npm test
+```
+## License
+
+MIT
