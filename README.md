@@ -4,9 +4,9 @@
 
 ## Contributors
 
-- Scott Clendening
-- Paul Mills
-- Neil Ricci
+- Scott Clendening (smclendening)
+- Paul Mills (pmillssf)
+- Neil Ricci (iccir919)
 - Justin Yoo (justinjyoo)
 - Matt Schmitz (mattschmitz)
 - Tyler Walker (twalk4821)
