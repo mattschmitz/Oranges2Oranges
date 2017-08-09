@@ -49,6 +49,7 @@ From within the root directory:
 ```
 npm test
 ```
+
 ## License
 
 MIT
